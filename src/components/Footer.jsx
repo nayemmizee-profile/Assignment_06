@@ -3,7 +3,7 @@ import logo from "../images/footer.png";
 
 export default function Footer() {
   return (
-    <footer className="mx-2 border-t border-white/5 bg-[#08090b]">
+    <footer className="px-10  bg-[#08090b]">
       <div className="flex h-[102px] items-center justify-between px-7">
         <Image
           src={logo}

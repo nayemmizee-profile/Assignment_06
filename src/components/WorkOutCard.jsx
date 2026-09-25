@@ -38,7 +38,7 @@ export default async function HomePage() {
   "
         >
           {exercises.map((exercise) => (
-            <ExerciseCard key={exercise.DataID} exercise={exercise} />
+            <ExerciseCard key={exercise.id} exercise={exercise} />
           ))}
         </section>
       </div>

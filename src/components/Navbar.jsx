@@ -1,10 +1,12 @@
 "use client";
 
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { useState } from "react";
 
 export default function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false);
+  const pathname = usePathname();
 
   return (
     <header className="border-b border-[#1d2025] bg-[#0b0c0f]">
@@ -20,16 +22,26 @@ export default function Navbar() {
 
         {/* Desktop Navigation */}
         <nav className="absolute left-1/2 hidden -translate-x-1/2 items-center gap-2 md:flex">
+          {/* Workouts */}
           <Link
             href="/"
-            className="rounded-full bg-[#17220f] px-[17px] py-2 text-[13px] font-bold text-[#baff00] transition hover:bg-[#202f12]"
+            className={`rounded-full px-[17px] py-2 text-[13px] border-1 font-bold transition ${
+              pathname === "/"
+                ? "bg-[#17220f] text-[#baff00]"
+                : "text-[#92969e] hover:bg-[#202f12] hover:text-white"
+            }`}
           >
             Workouts
           </Link>
 
+          {/* My Plan */}
           <Link
-            href="/my-plan"
-            className="rounded-full px-[17px] py-2 text-[13px] font-medium text-[#92969e] transition hover:text-white"
+            href="/MyPlan"
+            className={`rounded-full px-[17px] py-2 border-1 text-[13px] font-medium transition ${
+              pathname === "/MyPlan"
+                ? "bg-[#17220f] text-[#baff00]"
+                : "text-[#92969e] hover:text-white"
+            }`}
           >
             My Plan
           </Link>
@@ -79,7 +91,7 @@ export default function Navbar() {
             </Link>
 
             <Link
-              href="/my-plan"
+              href="/MyPlan"
               onClick={() => setMenuOpen(false)}
               className="rounded-lg px-4 py-3 text-sm text-[#999da5] hover:bg-[#15171c] hover:text-white"
             >
