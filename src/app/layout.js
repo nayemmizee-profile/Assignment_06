@@ -1,6 +1,7 @@
 import Footer from "@/components/Footer";
 import Navbar from "@/components/Navbar";
-import { PlanProvider } from "@/context/PlanContext";
+import { PlanContext } from "@/context/context";
+import { ToastContainer } from "react-toastify";
 import "./globals.css";
 
 export const metadata = {
@@ -12,11 +13,13 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body>
-        <PlanProvider>
+        <PlanContext>
           <Navbar />
           {children}
           <Footer />
-        </PlanProvider>
+
+          <ToastContainer />
+        </PlanContext>
       </body>
     </html>
   );

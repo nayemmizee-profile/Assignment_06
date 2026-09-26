@@ -1,45 +1,31 @@
 "use client";
 
+import { cardContext } from "@/context/context";
 import { useRouter } from "next/navigation";
+import { useContext } from "react";
+import { toast } from "react-toastify";
 
 const SlugButton2 = ({ exercise }) => {
   const router = useRouter();
 
+  const { setSaveCard } = useContext(cardContext);
+
   function handleSaveForLater() {
-    if (!exercise) {
-      console.error("No exercise was provided to SlugButton2");
-      return;
-    }
+    setSaveCard((previous) => {
+      // Prevent duplicate exercise
+      const alreadySaved = previous.some((item) => item.id === exercise.id);
 
-    try {
-      const stored = localStorage.getItem("savedPlan");
-
-      const currentPlan = stored ? JSON.parse(stored) : [];
-
-      const existingPlan = Array.isArray(currentPlan)
-        ? currentPlan.filter(Boolean)
-        : [];
-
-      const alreadyExists = existingPlan.some(
-        (item) => String(item.DataID) === String(exercise.DataID),
-      );
-
-      if (alreadyExists) {
-        console.log("Exercise already exists in Saved");
-        router.push("/MyPlan");
-        return;
+      if (alreadySaved) {
+        toast(`"${exercise.name}" is already saved.`);
+        return previous;
       }
 
-      const updatedPlan = [...existingPlan, exercise];
+      toast.success(`"${exercise.name}" saved for later.`);
 
-      localStorage.setItem("savedPlan", JSON.stringify(updatedPlan));
+      return [...previous, exercise];
+    });
 
-      console.log("Exercise saved for later:", exercise);
-
-      router.push("/MyPlan");
-    } catch (error) {
-      console.error("Failed to save exercise:", error);
-    }
+    router.push("/MyPlan");
   }
 
   return (

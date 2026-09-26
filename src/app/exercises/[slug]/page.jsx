@@ -1,8 +1,6 @@
 import SlugButton from "@/components/homepage/slugButton";
 import SlugButton2 from "@/components/homepage/slugButton2";
-
 import Image from "next/image";
-
 const cardData = async () => {
   const response = await fetch("https://api.abcz.workers.dev/api/fitlog");
 

@@ -1,6 +1,5 @@
 import Image from "next/image";
 import Link from "next/link";
-// import FavoriteButton from "./FavoriteButton";
 
 const cardData = async () => {
   const response = await fetch("https://api.abcz.workers.dev/api/fitlog");
@@ -9,22 +8,17 @@ const cardData = async () => {
     throw new Error("Failed to fetch exercise data");
   }
 
-  const data = await response.json();
-
-  return data;
+  return response.json();
 };
 
 const Card = async () => {
   const callData = await cardData();
 
-  //   console.log(callData, "carddata");
-
   return (
     <main className="min-h-screen bg-[#08090b] px-3 py-5 text-white sm:px-5 sm:py-7 lg:px-6 lg:py-8">
       <div className="mx-auto w-full max-w-[1180px]">
-        {/* Header */}
         <header className="mb-5 sm:mb-6">
-          <h1 className="text-3xl font-extrabold  sm:text-[40px]">
+          <h1 className="text-3xl font-extrabold sm:text-[40px]">
             THE LIBRARY
           </h1>
 
@@ -33,20 +27,10 @@ const Card = async () => {
           </p>
         </header>
 
-        {/* Exercise Grid */}
-        <section
-          className="
-            grid
-            grid-cols-1
-            gap-[10px]
-            sm:grid-cols-2
-            sm:gap-[11px]
-            lg:grid-cols-3
-          "
-        >
-          {callData.map((exercises, id) => (
+        <section className="grid grid-cols-1 gap-[10px] sm:grid-cols-2 sm:gap-[11px] lg:grid-cols-3">
+          {callData.map((exercise) => (
             <article
-              key={exercises.id}
+              key={exercise.id}
               className="
                 group
                 overflow-hidden
@@ -61,29 +45,28 @@ const Card = async () => {
                 hover:shadow-xl
               "
             >
-              {/* Image */}
-              <Link href={`/exercises/${exercises.id}`}>
+              {/* IMAGE */}
+              <Link href={`/exercises/${exercise.id}`}>
                 <div className="relative aspect-[16/10] overflow-hidden bg-zinc-900">
-                  {/* <Link href={`/exercises/${exercises.id}`}> */}
                   <Image
-                    src={exercises.image}
-                    alt={exercises.name}
+                    src={exercise.image}
+                    alt={exercise.name}
                     fill
-                    priority={exercises.id <= 3}
+                    priority={exercise.id <= 3}
                     sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
                     className="object-cover transition-transform duration-300 group-hover:scale-[1.035]"
                   />
-                  {/* </Link> */}
                 </div>
+              </Link>
 
-                {/* Card Content */}
-                <div className="p-3 sm:p-[20px]">
-                  {/* Muscle Groups */}
-                  <div className="mb-2 flex flex-wrap gap-1">
-                    {exercises.muscleGroups?.map((group) => (
-                      <span
-                        key={group}
-                        className="
+              {/* CONTENT */}
+              <div className="p-3 sm:p-[20px]">
+                {/* MUSCLE GROUPS */}
+                <div className="mb-2 flex flex-wrap gap-1">
+                  {exercise.muscleGroups?.map((group) => (
+                    <span
+                      key={group}
+                      className="
                         rounded-[3px]
                         bg-lime-400
                         px-[6px]
@@ -94,16 +77,16 @@ const Card = async () => {
                         leading-none
                         text-black
                       "
-                      >
-                        {group}
-                      </span>
-                    ))}
-                  </div>
+                    >
+                      {group}
+                    </span>
+                  ))}
+                </div>
 
-                  {/* Exercise Name */}
-                  <Link href={`/exercises/${exercises.id}`}>
-                    <h2
-                      className="
+                {/* NAME */}
+                <Link href={`/exercises/${exercise.id}`}>
+                  <h2
+                    className="
                       cursor-pointer
                       text-[16px]
                       font-extrabold
@@ -113,19 +96,19 @@ const Card = async () => {
                       transition-colors
                       hover:text-lime-400
                     "
-                    >
-                      {exercises.name}
-                    </h2>
-                  </Link>
+                  >
+                    {exercise.name}
+                  </h2>
+                </Link>
 
-                  {/* Equipment */}
-                  <p className="mb-3 mt-1 text-[12px] text-zinc-500">
-                    {exercises.equipment}
-                  </p>
+                {/* EQUIPMENT */}
+                <p className="mb-3 mt-1 text-[12px] text-zinc-500">
+                  {exercise.equipment}
+                </p>
 
-                  {/* Stats */}
-                  <div
-                    className="
+                {/* STATS */}
+                <div
+                  className="
                     flex
                     flex-wrap
                     gap-x-3
@@ -136,15 +119,12 @@ const Card = async () => {
                     text-[14px]
                     text-zinc-600
                   "
-                  >
-                    <span>◷ {exercises.duration} min</span>
-
-                    <span>◆ {exercises.caloriesBurned} kcal</span>
-
-                    <span>★ {exercises.rating}</span>
-                  </div>
+                >
+                  <span>◷ {exercise.duration} min</span>
+                  <span>◆ {exercise.caloriesBurned} kcal</span>
+                  <span>★ {exercise.rating}</span>
                 </div>
-              </Link>
+              </div>
             </article>
           ))}
         </section>
