@@ -1,5 +1,6 @@
 import Footer from "@/components/Footer";
 import Navbar from "@/components/Navbar";
+import { PlanProvider } from "@/context/PlanContext";
 import "./globals.css";
 
 export const metadata = {
@@ -11,9 +12,11 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body>
-        <Navbar />
-        {children}
-        <Footer />
+        <PlanProvider>
+          <Navbar />
+          {children}
+          <Footer />
+        </PlanProvider>
       </body>
     </html>
   );

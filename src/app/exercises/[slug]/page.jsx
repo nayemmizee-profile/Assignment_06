@@ -109,10 +109,6 @@ const paramsDetails = async ({ params }) => {
       label: "RATING",
       value: detail.rating,
     },
-
-    // function handleAddPlan() {
-    //   console.log("adding a plan");
-    // },
   ];
 
   return (
@@ -194,11 +190,13 @@ const paramsDetails = async ({ params }) => {
                 ))}
               </ol>
             </div>
+
             {/* onAddPlan={handleAddPlan} */}
             {/* ================= BUTTONS ================= */}
             <div className="mt-6 flex flex-wrap gap-3">
-              <SlugButton />
-              <SlugButton2 />
+              <SlugButton exercise={detail} />
+
+              <SlugButton2 exercise={exercise} />
             </div>
           </div>
         </div>
