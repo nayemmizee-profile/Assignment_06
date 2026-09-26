@@ -1,48 +1,13 @@
-// const API_URL = "https://api.abcz.workers.dev/api/fitlog";
-
-// async function getparamss() {
-//   const response = await fetch(API_URL);
-
-//   if (!response.ok) {
-//     throw new Error("Failed to fetch paramss");
-//   }
-
-//   return response.json();
-// }
-
-// export default async function paramsDetails({ detail }) {
-//   const { slug } = await detail;
-
-//   const paramss = await getparamss();
-
-//   const params = paramss.find((item) => item.id === Number(slug));
-
-//   if (!params) {
-//     return (
-//       <main className="min-h-screen bg-[#08090b] p-8 text-white">
-//         <h1 className="text-2xl font-bold">params not found</h1>
-//       </main>
-//     );
-//   }
-
-//   return (
-//     <main className="min-h-screen bg-[#08090b] p-6 text-white">
-//       <div className="mx-auto max-w-[1000px]">
-//         <h1 className="text-3xl font-bold">{params.name}</h1>
-
-//         <p className="mt-2 text-zinc-400">{params.description}</p>
-//       </div>
-//     </main>
-//   );
-// }
 import SlugButton from "@/components/homepage/slugButton";
 import SlugButton2 from "@/components/homepage/slugButton2";
+
 import Image from "next/image";
+
 const cardData = async () => {
   const response = await fetch("https://api.abcz.workers.dev/api/fitlog");
 
   if (!response.ok) {
-    throw new Error("Failed to fetch params data");
+    throw new Error("Failed to fetch exercise data");
   }
 
   const data = await response.json();
@@ -50,31 +15,18 @@ const cardData = async () => {
   return data;
 };
 
-// export default function paramsDetails({ params }) {
-//   if (!params) {
-//     return (
-//       <main className="min-h-screen  bg-[#0d0f12] text-white flex items-center justify-center">
-//         <p
-//           className="text-gray-400 border-1 border-[#5f645a] px-[200px] rounded-2xl
-//           bg-[#191919] py-16  "
-//         >
-//           params not found.
-//         </p>
-//       </main>
-//     );
-//   }
-
-const paramsDetails = async ({ params }) => {
+const ParamsDetails = async ({ params }) => {
   const { slug } = await params;
+
   const pageData = await cardData();
+
   const detail = pageData.find((card) => String(card.id) === String(slug));
-  // console.log(detail, "hello Details");
 
   if (!detail) {
     return (
       <main className="min-h-screen bg-[#0d0f12] text-white">
         <div className="flex min-h-screen items-center justify-center">
-          <h1 className="text-xl font-bold">params not found</h1>
+          <h1 className="text-xl font-bold">Exercise not found</h1>
         </div>
       </main>
     );
@@ -116,11 +68,11 @@ const paramsDetails = async ({ params }) => {
       <div className="mx-auto max-w-[1400px] px-4 py-8 sm:px-6 lg:px-10 lg:py-10">
         {/* Main layout */}
         <div className="grid grid-cols-1 gap-8 lg:grid-cols-[minmax(400px,1fr)_minmax(450px,1fr)] lg:gap-10">
-          {/* ================= IMAGE ================= */}
+          {/* IMAGE */}
           <div className="relative h-[450px] overflow-hidden rounded-xl sm:h-[550px] lg:h-[650px]">
             <Image
               src={detail.image}
-              alt={detail.name}
+              alt={detail.name || "Exercise"}
               fill
               priority
               className="object-cover"
@@ -128,9 +80,9 @@ const paramsDetails = async ({ params }) => {
             />
           </div>
 
-          {/* ================= CONTENT ================= */}
+          {/* CONTENT */}
           <div className="flex flex-col">
-            {/* Title */}
+            {/* TITLE */}
             <div>
               <h1 className="text-3xl font-black uppercase tracking-tight text-white sm:text-4xl">
                 {detail.name}
@@ -141,7 +93,7 @@ const paramsDetails = async ({ params }) => {
               </p>
             </div>
 
-            {/* Tags */}
+            {/* TAGS */}
             <div className="mt-4 flex flex-wrap gap-2">
               {detail.muscleGroups?.map((tag) => (
                 <span
@@ -153,7 +105,7 @@ const paramsDetails = async ({ params }) => {
               ))}
             </div>
 
-            {/* ================= DETAILS ================= */}
+            {/* DETAILS */}
             <div className="mt-5 overflow-hidden rounded-xl border border-[#242832] bg-[#15181e]">
               {details.map((item) => (
                 <div
@@ -171,7 +123,7 @@ const paramsDetails = async ({ params }) => {
               ))}
             </div>
 
-            {/* ================= INSTRUCTIONS ================= */}
+            {/* INSTRUCTIONS */}
             <div className="mt-6">
               <h2 className="text-sm font-black tracking-wide text-white">
                 INSTRUCTIONS
@@ -191,12 +143,11 @@ const paramsDetails = async ({ params }) => {
               </ol>
             </div>
 
-            {/* onAddPlan={handleAddPlan} */}
-            {/* ================= BUTTONS ================= */}
+            {/* BUTTONS */}
             <div className="mt-6 flex flex-wrap gap-3">
               <SlugButton exercise={detail} />
 
-              <SlugButton2 exercise={exercise} />
+              <SlugButton2 exercise={detail} />
             </div>
           </div>
         </div>
@@ -204,4 +155,5 @@ const paramsDetails = async ({ params }) => {
     </main>
   );
 };
-export default paramsDetails;
+
+export default ParamsDetails;
