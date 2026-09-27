@@ -2,7 +2,7 @@ import SlugButton from "@/components/homepage/slugButton";
 import SlugButton2 from "@/components/homepage/slugButton2";
 import Image from "next/image";
 const cardData = async () => {
-  const response = await fetch("https://api.abcz.workers.dev/api/fitlog");
+  const response = await fetch("https://api.api-store.workers.dev/api/fitlog");
 
   if (!response.ok) {
     throw new Error("Failed to fetch exercise data");

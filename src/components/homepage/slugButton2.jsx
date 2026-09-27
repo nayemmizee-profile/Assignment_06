@@ -1,6 +1,6 @@
 "use client";
 
-import { cardContext } from "@/context/context";
+import { CardContext } from "@/context/context";
 import { useRouter } from "next/navigation";
 import { useContext } from "react";
 import { toast } from "react-toastify";
@@ -8,7 +8,7 @@ import { toast } from "react-toastify";
 const SlugButton2 = ({ exercise }) => {
   const router = useRouter();
 
-  const { setSaveCard } = useContext(cardContext);
+  const { setSaveCard } = useContext(CardContext);
 
   function handleSaveForLater() {
     setSaveCard((previous) => {
@@ -20,11 +20,9 @@ const SlugButton2 = ({ exercise }) => {
         return previous;
       }
 
-      toast.success(`"${exercise.name}" saved for later.`);
-
       return [...previous, exercise];
     });
-
+    toast.success(`"${exercise.name}" saved for later.`);
     router.push("/MyPlan");
   }
 

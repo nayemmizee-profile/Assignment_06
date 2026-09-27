@@ -2,7 +2,7 @@
 
 import { createContext, useState } from "react";
 
-export const cardContext = createContext({});
+export const CardContext = createContext({});
 
 export function PlanContext({ children }) {
   const [saveCard, setSaveCard] = useState([]);
@@ -11,7 +11,7 @@ export function PlanContext({ children }) {
   const shareData = { saveCard, setSaveCard, todayPlan, setTodayPlan };
 
   return (
-    <cardContext.Provider value={shareData}>{children}</cardContext.Provider>
+    <CardContext.Provider value={shareData}>{children}</CardContext.Provider>
   );
 }
 

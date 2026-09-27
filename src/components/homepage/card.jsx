@@ -2,10 +2,14 @@ import Image from "next/image";
 import Link from "next/link";
 
 const cardData = async () => {
-  const response = await fetch("https://api.abcz.workers.dev/api/fitlog");
+  const response = await fetch("https://api.api-store.workers.dev/api/fitlog", {
+    next: {
+      revalidate: 3600,
+    },
+  });
 
   if (!response.ok) {
-    throw new Error("Failed to fetch exercise data");
+    throw new Error(`API Error: ${response.status}`);
   }
 
   return response.json();

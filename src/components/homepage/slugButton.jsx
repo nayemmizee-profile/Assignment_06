@@ -1,5 +1,5 @@
 "use client";
-import { cardContext } from "@/context/context";
+import { CardContext } from "@/context/context";
 import { useRouter } from "next/navigation";
 import { useContext } from "react";
 import { toast } from "react-toastify";
@@ -7,7 +7,7 @@ import { toast } from "react-toastify";
 const SlugButton = ({ exercise }) => {
   const router = useRouter();
 
-  const { setTodayPlan } = useContext(cardContext);
+  const { setTodayPlan } = useContext(CardContext);
   function handleAddPlan() {
     if (!exercise) {
       console.error("No exercise was provided.");
@@ -28,6 +28,7 @@ const SlugButton = ({ exercise }) => {
 
       return [...previous, exercise];
     });
+    toast.success(`"${exercise.name}" added to today's plan.`);
 
     router.push("/MyPlan");
   }
