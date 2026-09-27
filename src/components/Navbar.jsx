@@ -1,14 +1,16 @@
 "use client";
 
+import { CardContext } from "@/context/context";
 import Logo from "@/images/logo.png";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useState } from "react";
+import { useContext, useState } from "react";
 
 export default function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false);
   const pathname = usePathname();
+  const { saveCard, todayPlan } = useContext(CardContext);
 
   return (
     <header className="border-b border-[#1d2025] bg-[#0b0c0f]">
@@ -52,11 +54,11 @@ export default function Navbar() {
         {/* Desktop Right Side */}
         <div className="hidden items-center gap-7 md:flex">
           {/* Plan */}
-          <div className="flex items-center gap-2 text-[13px] text-[#999da5]">
+          <div className="flex items-center gap-2 text-[13px] text-[#fcfdff]">
             <span>Plan</span>
 
             <span className="flex h-[21px] w-[21px] items-center justify-center rounded-full bg-[#baff00] text-[12px] font-extrabold text-black">
-              0
+              {todayPlan?.length || 0}
             </span>
           </div>
 
@@ -64,8 +66,8 @@ export default function Navbar() {
           <div className="flex items-center gap-2 text-[13px] text-[#999da5]">
             <span>Saved</span>
 
-            <span className="flex h-[21px] w-[21px] items-center justify-center rounded-full border border-[#383c43] text-[12px] text-[#8f939c]">
-              0
+            <span className="flex h-[23px] w-[23px] items-center justify-center font-extrabold rounded-full border border-[#383c43] text-[12px] text-[#f4f6fa]">
+              {saveCard?.length || 0}
             </span>
           </div>
         </div>
