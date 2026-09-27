@@ -158,23 +158,27 @@ const ListedCard = () => {
         {/* Tabs Area */}
         <div className="bg-black">
           {/* Tab Header + Sort */}
-          <div className="relative mb-4 w-full">
+          <div className="relative  mb-4 w-full">
             {/* Tabs */}
-            <div className="tabs tabs-box w-full gap-3 bg-black">
+            <div className="tabs tabs-box w-full h-fit gap-3 bg-black">
               {/* Today's Plan */}
               <input
                 type="radio"
                 name="my_tabs_6"
-                className="tab bg-gray-800 text-white"
+                className={`tab ${
+                  activeTab === "today"
+                    ? "bg-[#6aff00] text-[#000000]"
+                    : "bg-[#000000] text-[#ffffff]"
+                }`}
                 aria-label="Today's Plan"
+                checked={activeTab === "today"}
                 onChange={() => setActiveTab("today")}
-                defaultChecked
               />
 
               {/* Today's Plan Content */}
               <div className="tab-content w-full bg-black border-base-300 p-6">
                 {sortedExercises.length === 0 ? (
-                  <div className="flex flex-col items-center justify-center rounded-3xl border-2 border-blue-400 bg-zinc-900 px-6 py-16">
+                  <div className="flex flex-col items-center justify-center w-full rounded-3xl border-2 border-amber-200 bg-zinc-900 px-6 py-16">
                     <h1 className="text-4xl font-extrabold text-white">
                       NOTHING HERE YET
                     </h1>
@@ -280,7 +284,11 @@ const ListedCard = () => {
               <input
                 type="radio"
                 name="my_tabs_6"
-                className="tab bg-gray-800 px-10 text-white"
+                className={`tab px-10 ${
+                  activeTab === "saved"
+                    ? "bg-[#6aff00] text-[#000000]"
+                    : "bg-[#080808] text-[#ffffff]"
+                }`}
                 aria-label="Saved"
                 onChange={() => setActiveTab("saved")}
               />
@@ -288,8 +296,21 @@ const ListedCard = () => {
               {/* Saved Content */}
               <div className="tab-content w-full bg-black border-base-300 p-6">
                 {sortedExercises.length === 0 ? (
-                  <div className="flex min-h-[200px] items-center justify-center">
-                    <p className="text-gray-400">No saved exercises yet.</p>
+                  <div className="flex flex-col items-center justify-center w-full rounded-3xl border-2 border-amber-200 bg-zinc-900 px-6 py-16">
+                    <h1 className="text-4xl font-extrabold text-white">
+                      NOTHING HERE YET
+                    </h1>
+
+                    <p className="mt-2 text-center text-[12px] text-gray-400">
+                      Browse the library and add a lift to get today moving.
+                    </p>
+
+                    <Link
+                      href="/"
+                      className="mt-4 flex h-9 w-[160px] items-center justify-center rounded-2xl bg-green-900 px-5 py-6 text-sm font-semibold text-white transition hover:bg-green-700"
+                    >
+                      Go to workouts
+                    </Link>
                   </div>
                 ) : (
                   <div className="flex flex-col gap-3">
@@ -385,7 +406,6 @@ const ListedCard = () => {
                 onChange={(e) => setSortBy(e.target.value)}
                 className="h-10 min-w-[140px] rounded-xl border border-[#252b35] bg-[#15181e] px-4 text-sm text-white outline-none transition hover:border-[#3a4350]"
               >
-                <option value="default">Sort By</option>
                 <option value="duration">Duration</option>
                 <option value="calories">Calories</option>
                 <option value="rating">Rating</option>

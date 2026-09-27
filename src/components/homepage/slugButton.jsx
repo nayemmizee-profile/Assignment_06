@@ -1,4 +1,5 @@
 "use client";
+
 import { CardContext } from "@/context/context";
 import { useRouter } from "next/navigation";
 import { useContext } from "react";
@@ -7,28 +8,37 @@ import { toast } from "react-toastify";
 const SlugButton = ({ exercise }) => {
   const router = useRouter();
 
-  const { setTodayPlan } = useContext(CardContext);
+  const { setTodayPlan, saveCard } = useContext(CardContext);
+
   function handleAddPlan() {
     if (!exercise) {
       console.error("No exercise was provided.");
       return;
     }
 
+    // Check if this exercise is already saved for later
+    const alreadySaved = saveCard.some(
+      (card) => String(card.id) === String(exercise.id),
+    );
+
+    if (alreadySaved) {
+      toast.warn(`"${exercise.name}" is already saved for later.`);
+      return;
+    }
+
+    // Add to today's plan
     setTodayPlan((previous) => {
       const alreadyExists = previous.some(
         (item) => String(item.id) === String(exercise.id),
       );
 
       if (alreadyExists) {
-        toast(`"${exercise.name}" is already in today's plan.`);
+        toast.warn(`"${exercise.name}" is already in today's plan.`);
         return previous;
       }
-
       toast.success(`"${exercise.name}" added to today's plan.`);
-
       return [...previous, exercise];
     });
-    toast.success(`"${exercise.name}" added to today's plan.`);
 
     router.push("/MyPlan");
   }

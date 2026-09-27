@@ -1,5 +1,7 @@
 "use client";
 
+import Logo from "@/images/logo.png";
+import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
@@ -12,13 +14,13 @@ export default function Navbar() {
     <header className="border-b border-[#1d2025] bg-[#0b0c0f]">
       <div className="mx-auto flex h-[84px] max-w-[1400px] items-center justify-between px-6 md:px-8">
         {/* Logo */}
-        <Link
-          href="/"
-          className="flex items-center gap-2 text-[19px] font-extrabold tracking-wide text-white"
-        >
-          <span className="text-2xl text-[#baff00]">⚒</span>
-          <span>FITLOG</span>
-        </Link>
+        <div>
+          <Link href="/" className="flex items-center gap-2">
+            <Image src={Logo} alt="LOGO" width={30} height={60} />
+
+            <h1 className="text-white font-extrabold">FITLOG</h1>
+          </Link>
+        </div>
 
         {/* Desktop Navigation */}
         <nav className="absolute left-1/2 hidden -translate-x-1/2 items-center gap-2 md:flex">
